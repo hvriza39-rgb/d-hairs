@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import { CldUploadWidget } from "next-cloudinary";
 
 export default function AddProductForm() {
     const router = useRouter();
@@ -19,7 +19,10 @@ export default function AddProductForm() {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-
+    const handleUploadSuccess = (result) => {
+        const url = result?.info?.secure_url;
+        if (url) setImageUrl(url);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,7 +37,7 @@ export default function AddProductForm() {
                 body: JSON.stringify({
                     ...formData,
                     price: parseFloat(formData.price),
-                    imageUrl,
+                    imageUrl: imageUrl || "",
                 }),
             });
 
@@ -60,27 +63,56 @@ export default function AddProductForm() {
             </div>
             <div className="p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Image URL Input */}
+                    {/* Cloudinary Upload Widget */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Product Image URL *
+                            Product Image *
                         </label>
-                        <input
-                            type="url"
-                            required
-                            value={imageUrl}
-                            onChange={(e) => setImageUrl(e.target.value)}
-                            placeholder="https://..."
-                            className="w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500 text-sm"
-                        />
-                        {imageUrl && (
-                            <div className="mt-3 rounded-xl overflow-hidden border border-gray-100 aspect-video bg-gray-50">
-                                <img src={imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                        <CldUploadWidget
+                            cloudName={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}
+                            uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+                            onSuccess={handleUploadSuccess}
+                        >
+                            {({ open }) => (
+                                <button
+                                    type="button"
+                                    onClick={() => open()}
+                                    className="w-full rounded-xl border border-gray-200 px-4 py-3 hover:bg-gray-50 text-sm text-gray-600"
+                                >
+                                    Upload image
+                                </button>
+                            )}
+                        </CldUploadWidget>
+
+                        {imageUrl ? (
+                            <div className="mt-3">
+                                <img
+                                    src={imageUrl}
+                                    alt="Preview"
+                                    className="h-40 w-40 rounded-xl object-cover border"
+                                />
                             </div>
+                        ) : (
+                            <p className="mt-2 text-xs text-gray-500">
+                                Upload an image (Cloudinary) or paste an image URL below.
+                            </p>
                         )}
-                        <p className="mt-2 text-xs text-gray-500">
-                            Paste an image link for now. (Cloudinary upload can be added later.)
-                        </p>
+
+                        <input type="hidden" name="imageUrl" value={imageUrl} />
+
+                        {/* Fallback: manual URL input */}
+                        <div className="mt-3">
+                            <label className="block text-xs font-medium text-gray-500 mb-1">
+                                Or paste an image URL
+                            </label>
+                            <input
+                                type="url"
+                                value={imageUrl}
+                                onChange={(e) => setImageUrl(e.target.value)}
+                                placeholder="https://..."
+                                className="w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500 text-sm"
+                            />
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
