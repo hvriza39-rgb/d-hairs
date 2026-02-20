@@ -10,8 +10,8 @@ export default function ProductCard({ product }) {
     }).format(product.price);
 
     const whatsappMessage = `Hello, I want to order ${product.name} for ${formattedPrice}`;
-    // 2348012345678 is a placeholder phone number. User needs to replace it.
-    const whatsappUrl = `https://wa.me/2348012345678?text=${encodeURIComponent(whatsappMessage)}`;
+    // 2349021570977 is the WhatsApp phone number (no plus sign in wa.me links).
+    const whatsappUrl = `https://wa.me/2349021570977?text=${encodeURIComponent(whatsappMessage)}`;
 
     return (
         <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full">
