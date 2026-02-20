@@ -1,0 +1,153 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+
+export default function AddProductForm() {
+    const router = useRouter();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [imageUrl, setImageUrl] = useState("");
+    const [formData, setFormData] = useState({
+        name: "",
+        price: "",
+        description: "",
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+
+        try {
+            const response = await fetch("/api/products", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    ...formData,
+                    price: parseFloat(formData.price),
+                    imageUrl,
+                }),
+            });
+
+            if (response.ok) {
+                router.push("/admin/products");
+                router.refresh();
+            } else {
+                const error = await response.json();
+                alert(`Failed to add product: ${error.message}`);
+            }
+        } catch (error) {
+            alert("An unexpected error occurred.");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    return (
+        <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div className="px-8 py-6 border-b border-gray-100">
+                <h2 className="text-xl font-bold text-gray-900">Add New Product</h2>
+                <p className="mt-1 text-sm text-gray-500">Fill in the details to add a new product to your store.</p>
+            </div>
+            <div className="p-8">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Image URL Input */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Product Image URL *
+                        </label>
+                        <input
+                            type="url"
+                            required
+                            value={imageUrl}
+                            onChange={(e) => setImageUrl(e.target.value)}
+                            placeholder="https://..."
+                            className="w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500 text-sm"
+                        />
+                        {imageUrl && (
+                            <div className="mt-3 rounded-xl overflow-hidden border border-gray-100 aspect-video bg-gray-50">
+                                <img src={imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                            </div>
+                        )}
+                        <p className="mt-2 text-xs text-gray-500">
+                            Paste an image link for now. (Cloudinary upload can be added later.)
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                        <div>
+                            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Product Name *</label>
+                            <input
+                                type="text"
+                                name="name"
+                                id="name"
+                                required
+                                value={formData.name}
+                                onChange={handleChange}
+                                className="mt-2 block w-full border-gray-300 rounded-xl shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm px-4 py-3 border"
+                                placeholder="e.g. Bone Straight 24 inches"
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="price" className="block text-sm font-medium text-gray-700">Price (₦) *</label>
+                            <input
+                                type="number"
+                                name="price"
+                                id="price"
+                                required
+                                min="0"
+                                step="1000"
+                                value={formData.price}
+                                onChange={handleChange}
+                                className="mt-2 block w-full border-gray-300 rounded-xl shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm px-4 py-3 border"
+                                placeholder="150000"
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description *</label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            rows={4}
+                            required
+                            value={formData.description}
+                            onChange={handleChange}
+                            className="mt-2 block w-full border-gray-300 rounded-xl shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm px-4 py-3 border"
+                            placeholder="Detailed description of the hair..."
+                        />
+                    </div>
+
+                    <div className="pt-4 border-t border-gray-100 flex justify-end">
+                        <button
+                            type="button"
+                            onClick={() => router.back()}
+                            className="bg-white py-2.5 px-6 border border-gray-300 rounded-xl shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none mr-4"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            disabled={isSubmitting || !imageUrl}
+                            className={`inline-flex justify-center py-2.5 px-8 border border-transparent shadow-sm text-sm font-medium rounded-xl text-white ${isSubmitting || !imageUrl ? "bg-pink-400 cursor-not-allowed" : "bg-pink-600 hover:bg-pink-700"
+                                }`}
+                        >
+                            {isSubmitting ? "Saving..." : "Save Product"}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
+}
