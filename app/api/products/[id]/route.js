@@ -4,8 +4,9 @@ import { updateProduct, deleteProduct } from "@/services/productService";
 
 export async function GET(_req, { params }) {
     try {
+        const { id } = await params;
         const product = await prisma.product.findUnique({
-            where: { id: params.id },
+            where: { id },
         });
 
         if (!product) {
