@@ -1,54 +1,34 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { headers } from "next/headers";
 
-// Temporary mock data. Will be replaced by Prisma backend.
-const mockProducts = [
-    {
-        id: "1",
-        name: "Bone Straight 24 inches",
-        description: "Premium double drawn bone straight human hair. Silky smooth texture with full density from top to bottom. 100% unprocessed virgin hair that can be bleached, dyed, and styled to your preference. Guaranteed no tangling or shedding with proper care.",
-        price: 150000,
-        imageUrl: "https://images.unsplash.com/photo-1519714859231-01646270b205?q=80&w=600&auto=format&fit=crop"
-    },
-    {
-        id: "2",
-        name: "Body Wave 20 inches",
-        description: "Luxurious body wave bundles. 100% unprocessed virgin hair that holds curls beautifully. Soft, bouncy, and versatile.",
-        price: 120000,
-        imageUrl: "https://images.unsplash.com/photo-1580617945535-64bcbd741d45?q=80&w=600&auto=format&fit=crop"
-    },
-    {
-        id: "3",
-        name: "Deep Curly Frontal Wig",
-        description: "Voluminous deep curly 13x4 lace frontal wig. Pre-plucked hairline with hd lace that melts perfectly into all skin tones. 180% density for maximum volume.",
-        price: 185000,
-        imageUrl: "https://images.unsplash.com/photo-1595426173007-90ff7daceb27?q=80&w=600&auto=format&fit=crop"
-    },
-    {
-        id: "4",
-        name: "Blonde Highlight 613",
-        description: "Custom colored 613 blonde highlights on straight hair. Perfect for summer outtings. Expertly colored to maintain hair health and shine.",
-        price: 95000,
-        imageUrl: "https://plus.unsplash.com/premium_photo-1673890333010-80a256157973?q=80&w=600&auto=format&fit=crop"
-    }
-];
+export const dynamic = "force-dynamic";
+
+async function getProduct(id) {
+    const h = await headers();
+    const host = h.get("host");
+    const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+    const baseUrl = `${protocol}://${host}`;
+
+    const res = await fetch(`${baseUrl}/api/products/${id}`, { cache: "no-store" });
+    if (!res.ok) return null;
+    return res.json();
+}
 
 export async function generateMetadata({ params }) {
     const { id } = await params;
-    const product = mockProducts.find(p => p.id === id);
+    const product = await getProduct(id);
     if (!product) return { title: "Product Not Found" };
     return {
         title: `${product.name} | D-Hairs`,
-        description: product.description.substring(0, 160)
+        description: product.description?.substring(0, 160),
     };
 }
 
 export default async function ProductPage({ params }) {
     const { id } = await params;
-
-    // Later: const product = await prisma.product.findUnique({ where: { id }})
-    const product = mockProducts.find(p => p.id === id);
+    const product = await getProduct(id);
 
     if (!product) {
         notFound();
@@ -93,7 +73,7 @@ export default async function ProductPage({ params }) {
                     <div className="lg:max-w-xl lg:self-center">
                         <div className="rounded-3xl overflow-hidden aspect-[4/5] bg-gray-100 relative shadow-sm border border-gray-100">
                             <Image
-                                src={product.imageUrl}
+                                src={product.imageUrl || "/placeholder.jpg"}
                                 alt={product.name}
                                 fill
                                 className="object-cover object-center"

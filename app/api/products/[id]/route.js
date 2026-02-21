@@ -1,5 +1,23 @@
 import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 import { updateProduct, deleteProduct } from "@/services/productService";
+
+export async function GET(_req, { params }) {
+    try {
+        const product = await prisma.product.findUnique({
+            where: { id: params.id },
+        });
+
+        if (!product) {
+            return NextResponse.json({ error: "Not found" }, { status: 404 });
+        }
+
+        return NextResponse.json(product);
+    } catch (err) {
+        console.error("GET /api/products/[id] error:", err);
+        return NextResponse.json({ error: "Failed to fetch product" }, { status: 500 });
+    }
+}
 
 export async function PATCH(request, { params }) {
     try {
