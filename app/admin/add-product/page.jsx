@@ -4,6 +4,15 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CldUploadWidget } from "next-cloudinary";
 
+const CATEGORIES = [
+    "Lace Front Wigs",
+    "Hair Bundles",
+    "Closures & Frontals",
+    "Colored Wigs",
+    "Extensions",
+    "Other",
+];
+
 export default function AddProductForm() {
     const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -12,11 +21,16 @@ export default function AddProductForm() {
         name: "",
         price: "",
         description: "",
+        category: "Lace Front Wigs",
+        featured: false,
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        const { name, value, type, checked } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: type === "checkbox" ? checked : value,
+        }));
     };
 
     const handleUploadSuccess = (result) => {
@@ -147,6 +161,22 @@ export default function AddProductForm() {
                         </div>
                     </div>
 
+                    {/* Category */}
+                    <div>
+                        <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category *</label>
+                        <select
+                            name="category"
+                            id="category"
+                            value={formData.category}
+                            onChange={handleChange}
+                            className="mt-2 block w-full border-gray-300 rounded-xl shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm px-4 py-3 border bg-white"
+                        >
+                            {CATEGORIES.map((cat) => (
+                                <option key={cat} value={cat}>{cat}</option>
+                            ))}
+                        </select>
+                    </div>
+
                     <div>
                         <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description *</label>
                         <textarea
@@ -159,6 +189,22 @@ export default function AddProductForm() {
                             className="mt-2 block w-full border-gray-300 rounded-xl shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm px-4 py-3 border"
                             placeholder="Detailed description of the hair..."
                         />
+                    </div>
+
+                    {/* Featured toggle */}
+                    <div className="flex items-center gap-3">
+                        <input
+                            type="checkbox"
+                            id="featured"
+                            name="featured"
+                            checked={formData.featured}
+                            onChange={handleChange}
+                            className="h-4 w-4 text-pink-600 border-gray-300 rounded focus:ring-pink-500"
+                        />
+                        <label htmlFor="featured" className="text-sm font-medium text-gray-700">
+                            Mark as Featured
+                        </label>
+                        <span className="text-xs text-gray-400">(Featured products may appear in promotional spots)</span>
                     </div>
 
                     <div className="pt-4 border-t border-gray-100 flex justify-end">

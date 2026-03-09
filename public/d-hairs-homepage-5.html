@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D-HAIRS | Flawless Hair, Every Day</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0f0d0d; --cream:#faf7f4; --blush:#f2e8e8;
+  --rose:#e8347a; --rose-d:#c01f5e; --rose-l:#f7d0df; --rose-p:#fdf2f6;
+  --gold:#c9a96e;
+  --p:clamp(20px,6vw,72px);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;}
+
+/* ANNOUNCEMENT */
+.bar{background:var(--ink);color:rgba(255,255,255,.7);text-align:center;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:10px 20px;position:relative;overflow:hidden;}
+.bar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(232,52,122,.2),transparent);animation:shimmer 3s ease-in-out infinite;}
+.bar strong{color:var(--rose-l);}
+@keyframes shimmer{0%,100%{opacity:0}50%{opacity:1}}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:200;background:rgba(250,247,244,.96);backdrop-filter:blur(14px);border-bottom:1px solid rgba(232,52,122,.1);}
+.nav-wrap{display:flex;align-items:center;justify-content:space-between;padding:0 var(--p);height:62px;max-width:1400px;margin:0 auto;}
+.logo{text-decoration:none;line-height:1.1;}
+.logo-main{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--ink);letter-spacing:.03em;}
+.logo-main span{color:var(--rose);}
+.logo-sub{font-size:8px;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{font-size:11.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);text-decoration:none;position:relative;padding-bottom:2px;transition:color .2s;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;background:var(--rose);transition:width .3s;}
+.nav-links a:hover{color:var(--rose);}
+.nav-links a:hover::after{width:100%;}
+.nav-r{display:flex;align-items:center;gap:6px;}
+.ic{width:36px;height:36px;border:none;background:none;cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--ink);position:relative;transition:background .2s;}
+.ic:hover{background:var(--rose-p);}
+.cart-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;background:var(--rose);border-radius:50%;border:2px solid var(--cream);}
+.shop-btn{background:var(--rose);color:#fff;border:none;cursor:pointer;padding:9px 22px;border-radius:30px;font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;transition:background .2s,transform .2s,box-shadow .2s;margin-left:6px;}
+.shop-btn:hover{background:var(--rose-d);transform:translateY(-1px);box-shadow:0 6px 18px rgba(232,52,122,.3);}
+
+/* HERO SLIDER */
+.hero{position:relative;height:100vh;min-height:600px;overflow:hidden;}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.4s cubic-bezier(.4,0,.2,1);z-index:0;}
+.slide.active{opacity:1;z-index:1;}
+.slide-photo{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center top;
+  transform:scale(1.06);transition:transform 7s ease;
+}
+.slide.active .slide-photo{transform:scale(1);}
+.slide-overlay{position:absolute;inset:0;}
+.s1 .slide-overlay{background:linear-gradient(105deg,rgba(5,3,3,.82) 0%,rgba(5,3,3,.4) 55%,rgba(232,52,122,.06) 100%);}
+.s2 .slide-overlay{background:linear-gradient(to right,rgba(5,3,3,.85) 0%,rgba(5,3,3,.45) 52%,rgba(232,52,122,.05) 100%);}
+.s3 .slide-overlay{background:linear-gradient(130deg,rgba(5,3,3,.88) 0%,rgba(5,3,3,.38) 58%,rgba(201,169,110,.05) 100%);}
+.slide-content{
+  position:absolute;top:50%;left:var(--p);
+  transform:translateY(-50%);max-width:580px;color:#fff;
+}
+.slide-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:22px;opacity:0;transform:translateY(14px);transition:opacity .7s ease .2s,transform .7s ease .2s;}
+.slide-eyebrow::before{content:'';width:32px;height:1.5px;background:var(--rose);flex-shrink:0;}
+.slide-eyebrow span{font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--rose-l);font-weight:600;}
+.slide-h1{font-family:'Playfair Display',serif;font-size:clamp(42px,5.8vw,86px);font-weight:900;line-height:.96;margin-bottom:18px;opacity:0;transform:translateY(18px);transition:opacity .7s ease .34s,transform .7s ease .34s;}
+.slide-h1 em{font-style:italic;color:var(--rose-l);display:block;margin-top:6px;}
+.slide-sub{font-size:15px;font-weight:300;line-height:1.76;color:rgba(255,255,255,.78);max-width:420px;margin-bottom:36px;opacity:0;transform:translateY(18px);transition:opacity .7s ease .5s,transform .7s ease .5s;}
+.slide-btns{display:flex;align-items:center;gap:18px;flex-wrap:wrap;opacity:0;transform:translateY(18px);transition:opacity .7s ease .64s,transform .7s ease .64s;}
+.slide.active .slide-eyebrow,.slide.active .slide-h1,.slide.active .slide-sub,.slide.active .slide-btns{opacity:1;transform:translateY(0);}
+.btn-main{background:var(--rose);color:#fff;border:none;cursor:pointer;padding:15px 38px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;transition:background .2s,transform .2s,box-shadow .2s;text-decoration:none;display:inline-block;}
+.btn-main:hover{background:var(--rose-d);transform:translateY(-2px);box-shadow:0 10px 28px rgba(232,52,122,.4);}
+.btn-outline{color:#fff;text-decoration:none;font-size:12.5px;font-weight:500;display:flex;align-items:center;gap:9px;border:1.5px solid rgba(255,255,255,.45);padding:14px 28px;border-radius:4px;transition:border-color .2s,background .2s;}
+.btn-outline:hover{border-color:#fff;background:rgba(255,255,255,.1);}
+
+/* progress bar */
+.slide-progress{position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(255,255,255,.1);z-index:10;display:flex;}
+.prog-seg{flex:1;position:relative;overflow:hidden;}
+.prog-fill{position:absolute;top:0;left:0;height:100%;width:0;background:var(--rose);}
+.prog-fill.running{animation:progAnim 10000ms linear forwards;}
+@keyframes progAnim{from{width:0}to{width:100%}}
+
+/* arrows */
+.hero-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:10;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.25);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);transition:background .25s,border-color .25s;}
+.hero-arrow:hover{background:var(--rose);border-color:var(--rose);}
+.arrow-l{left:24px;}
+.arrow-r{right:24px;}
+
+/* slide counter */
+.slide-counter{position:absolute;bottom:54px;right:var(--p);z-index:10;color:rgba(255,255,255,.5);font-size:12px;letter-spacing:.12em;font-weight:500;}
+.slide-counter strong{color:#fff;font-size:20px;font-family:'Playfair Display',serif;}
+
+/* floating chip */
+.hero-chip{position:absolute;bottom:46px;left:var(--p);z-index:10;background:rgba(255,255,255,.1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:13px 18px;display:flex;align-items:center;gap:12px;color:#fff;}
+.hero-chip strong{display:block;font-size:14px;font-weight:600;}
+.hero-chip span{font-size:11px;color:rgba(255,255,255,.62);}
+
+/* MARQUEE */
+.marquee{background:var(--ink);overflow:hidden;padding:13px 0;}
+.mtrack{display:flex;white-space:nowrap;animation:mscroll 26s linear infinite;}
+.mitem{display:inline-flex;align-items:center;gap:14px;padding:0 30px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);font-weight:500;}
+.mitem em{color:var(--rose);font-style:normal;font-size:15px;}
+@keyframes mscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* FEATURES */
+.features{background:#fff;border-bottom:1px solid var(--blush);display:grid;grid-template-columns:repeat(4,1fr);}
+.feat{display:flex;align-items:center;gap:13px;padding:22px clamp(16px,3vw,32px);border-right:1px solid var(--blush);}
+.feat:last-child{border-right:none;}
+.feat-icon{width:42px;height:42px;background:var(--rose-p);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.feat strong{display:block;font-size:12px;font-weight:600;color:var(--ink);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px;}
+.feat span{font-size:11.5px;color:#bbb;}
+
+/* SECTION HEAD */
+.sec-head{margin-bottom:44px;}
+.sec-ey{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.sec-ey::before{content:'';width:28px;height:1.5px;background:var(--rose);}
+.sec-ey span{font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--rose);font-weight:600;}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(26px,3.2vw,42px);font-weight:700;color:var(--ink);line-height:1.1;}
+.sec-title em{font-style:italic;color:var(--rose);}
+
+/* CATEGORIES */
+.cats{padding:76px var(--p);}
+.cat-grid{display:grid;grid-template-columns:1.45fr 1fr 1fr;grid-template-rows:270px 180px;gap:13px;}
+.cat-card{border-radius:12px;overflow:hidden;cursor:pointer;position:relative;transition:transform .32s,box-shadow .32s;}
+.cat-card:hover{transform:translateY(-5px);box-shadow:0 22px 50px rgba(0,0,0,.18);}
+.cat-card:first-child{grid-row:1/3;}
+.cat-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .6s ease;}
+.cat-card:hover .cat-bg{transform:scale(1.06);}
+.cat-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,8,8,.87) 0%,rgba(10,8,8,.04) 58%);transition:background .3s;}
+.cat-card:hover .cat-ov{background:linear-gradient(to top,rgba(192,31,94,.76) 0%,rgba(10,8,8,.06) 58%);}
+.cat-info{position:absolute;bottom:18px;left:20px;right:48px;color:#fff;}
+.cat-lbl{font-size:9.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--rose-l);display:block;margin-bottom:4px;}
+.cat-name{font-family:'Playfair Display',serif;font-size:clamp(16px,1.8vw,24px);font-weight:700;line-height:1.1;}
+.cat-cnt{font-size:11px;color:rgba(255,255,255,.52);margin-top:5px;}
+.cat-arr{position:absolute;bottom:18px;right:18px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;opacity:0;transform:translateX(-6px);transition:opacity .3s,transform .3s;}
+.cat-card:hover .cat-arr{opacity:1;transform:translateX(0);}
+
+/* ABOUT */
+.about{display:grid;grid-template-columns:1fr 1fr;min-height:440px;}
+.about-vis{position:relative;overflow:hidden;background:#0f0808;}
+.about-vis-photo{position:absolute;inset:0;background-size:cover;background-position:center 20%;}
+.about-vis::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(to right,rgba(10,8,8,.25) 0%,rgba(10,8,8,.05) 60%);}
+.about-vis-badge{position:absolute;bottom:32px;right:28px;z-index:2;background:rgba(232,52,122,.92);backdrop-filter:blur(8px);border-radius:10px;padding:14px 20px;color:#fff;text-align:center;}
+.about-vis-badge strong{display:block;font-family:'Playfair Display',serif;font-size:28px;font-weight:900;line-height:1;}
+.about-vis-badge span{font-size:10px;letter-spacing:.15em;text-transform:uppercase;opacity:.85;}
+.about-txt{background:var(--ink);padding:68px clamp(28px,5vw,76px);display:flex;flex-direction:column;justify-content:center;}
+.about-txt .sec-ey::before{background:var(--rose-l);}
+.about-txt .sec-ey span{color:var(--rose-l);}
+.about-txt .sec-title{color:#fff;}
+.about-txt .sec-title em{color:var(--rose-l);}
+.about-p{font-size:14.5px;font-weight:300;line-height:1.85;color:rgba(255,255,255,.62);margin:22px 0 32px;max-width:440px;}
+.checks{display:flex;flex-direction:column;gap:13px;}
+.chk{display:flex;align-items:center;gap:12px;font-size:13.5px;color:rgba(255,255,255,.78);}
+.chk-ic{width:24px;height:24px;background:var(--rose);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;}
+
+/* TESTIMONIALS */
+.testis{padding:76px var(--p);background:var(--rose-p);}
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px;}
+.tcard{background:#fff;border-radius:12px;padding:26px;box-shadow:0 4px 18px rgba(232,52,122,.07);transition:transform .3s,box-shadow .3s;}
+.tcard:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(232,52,122,.14);}
+.tstars{color:var(--rose);font-size:13px;letter-spacing:2px;margin-bottom:14px;}
+.tquote{font-size:13.5px;line-height:1.78;color:#555;font-style:italic;margin-bottom:18px;}
+.tauthor{display:flex;align-items:center;gap:11px;}
+.tavatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--rose-d));display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.tname{font-size:13px;font-weight:600;color:var(--ink);}
+.tverified{font-size:10px;color:#bbb;margin-top:2px;display:flex;align-items:center;gap:3px;}
+.tverified::before{content:'✓';color:var(--rose);font-weight:700;}
+
+/* CTA */
+.cta{margin:0 var(--p) 76px;border-radius:16px;overflow:hidden;background:linear-gradient(132deg,var(--ink) 0%,#2d1020 52%,#3c1032 100%);padding:60px clamp(24px,5vw,76px);display:grid;grid-template-columns:1fr auto;align-items:center;gap:36px;position:relative;}
+.cta::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.04) 1px,transparent 1px);background-size:24px 24px;}
+.cta-txt{position:relative;z-index:1;}
+.cta-lbl{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose-l);display:block;margin-bottom:10px;}
+.cta-h{font-family:'Playfair Display',serif;font-size:clamp(26px,3.2vw,46px);font-weight:700;color:#fff;line-height:1.08;margin-bottom:10px;}
+.cta-h em{font-style:italic;color:var(--rose-l);}
+.cta-sub{font-size:13.5px;color:rgba(255,255,255,.58);line-height:1.65;margin-bottom:10px;}
+.cta-code{font-size:12px;color:rgba(255,255,255,.45);letter-spacing:.08em;margin-bottom:28px;}
+.cta-code strong{color:var(--rose-l);font-size:14px;letter-spacing:.14em;}
+.cta-side{position:relative;z-index:1;flex-shrink:0;}
+.cta-circle{width:155px;height:155px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--rose-d));display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 0 18px rgba(232,52,122,.12),0 0 0 36px rgba(232,52,122,.06);}
+.cta-pct{font-size:46px;font-weight:800;color:#fff;line-height:1;}
+.cta-off{font-size:11px;font-weight:600;color:rgba(255,255,255,.8);letter-spacing:.12em;text-transform:uppercase;}
+
+/* FOOTER */
+footer{background:var(--ink);color:rgba(255,255,255,.5);padding:60px var(--p) 26px;}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:44px;}
+.foot-logo-main{font-family:'Playfair Display',serif;font-size:21px;font-weight:900;color:#fff;letter-spacing:.03em;}
+.foot-logo-main span{color:var(--rose);}
+.foot-logo-sub{font-size:8px;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);margin-top:2px;margin-bottom:16px;display:block;}
+.foot-brand p{font-size:13px;line-height:1.8;max-width:230px;margin-bottom:22px;}
+.socials{display:flex;gap:9px;}
+.soc{width:33px;height:33px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;text-decoration:none;transition:background .2s,border-color .2s;}
+.soc:hover{background:var(--rose);border-color:var(--rose);}
+.foot-col h5{font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#fff;margin-bottom:16px;}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.foot-col a{text-decoration:none;color:rgba(255,255,255,.42);font-size:13px;transition:color .2s;}
+.foot-col a:hover{color:var(--rose);}
+.foot-btm{border-top:1px solid rgba(255,255,255,.08);padding-top:22px;display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:rgba(255,255,255,.26);}
+
+/* MOBILE */
+@media(max-width:900px){
+  .nav-links,.shop-btn{display:none;}
+  .hero{height:85vh;min-height:520px;}
+  .slide-content{left:24px;right:24px;max-width:100%;}
+  .hero-chip{left:20px;bottom:36px;}
+  .slide-counter{right:20px;bottom:44px;}
+  .features{grid-template-columns:repeat(2,1fr);}
+  .feat{border-right:none;border-bottom:1px solid var(--blush);}
+  .feat:nth-child(odd){border-right:1px solid var(--blush);}
+  .feat:nth-last-child(-n+2){border-bottom:none;}
+  .about{grid-template-columns:1fr;}
+  .about-vis{height:280px;}
+  .tgrid{grid-template-columns:1fr;}
+  .cta{grid-template-columns:1fr;text-align:center;}
+  .cta-side{display:flex;justify-content:center;}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:28px;}
+  .foot-brand{grid-column:1/3;}
+  .foot-btm{flex-direction:column;gap:10px;text-align:center;}
+  .hero-arrow{display:none;}
+}
+@media(max-width:640px){
+  .cat-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .cat-card:first-child{grid-column:1/3;grid-row:auto;height:220px;}
+  .cat-card{height:160px;}
+  .cta{margin:0 0 60px;border-radius:0;}
+}
+@media(max-width:440px){
+  .cat-grid{grid-template-columns:1fr;}
+  .cat-card:first-child{grid-column:auto;height:200px;}
+  .features{grid-template-columns:1fr;}
+  .feat{border-right:none !important;}
+  .foot-grid{grid-template-columns:1fr;}
+  .foot-brand{grid-column:auto;}
+}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.1s;}.d2{transition-delay:.18s;}.d3{transition-delay:.26s;}
+</style>
+</head>
+<body>
+
+<div class="bar"><strong>✦ FREE SHIPPING</strong> on orders over $150 &nbsp;·&nbsp; Use <strong>DHAIRS20</strong> for 20% off your first order ✦</div>
+
+<header>
+  <div class="nav-wrap">
+    <a class="logo" href="#">
+      <div class="logo-main">D-<span>HAIRS</span></div>
+      <div class="logo-sub">Premium Human Hair</div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li><li><a href="#">Shop</a></li>
+      <li><a href="#">Wigs</a></li><li><a href="#">Bundles</a></li>
+      <li><a href="#">Closures</a></li><li><a href="#">About</a></li>
+    </ul>
+    <div class="nav-r">
+      <button class="ic">🔍</button>
+      <button class="ic">♡</button>
+      <button class="ic" style="position:relative">🛍<span class="cart-dot"></span></button>
+      <button class="shop-btn">Shop Now</button>
+    </div>
+  </div>
+</header>
+
+<div class="hero" id="hero">
+  <div class="slide s1 active" id="s0">
+    <div class="slide-photo" style="background-image:url('https://res.cloudinary.com/dla8ojffk/image/upload/f_auto,q_auto,w_1600/v1771610577/u4uals0pxpwrq9bbuvvy.jpg')"></div>
+    <div class="slide-overlay"></div>
+    <div class="slide-content">
+      <div class="slide-eyebrow"><span>New Collection 2025</span></div>
+      <h1 class="slide-h1">Flawless Hair,<em>Every Day.</em></h1>
+      <p class="slide-sub">Premium 100% human hair lace front wigs — undetectable, luxurious, delivered to you.</p>
+      <div class="slide-btns">
+        <a href="#" class="btn-main">Shop Collection</a>
+        <a href="#" class="btn-outline">View Lookbook</a>
+      </div>
+    </div>
+  </div>
+  <div class="slide s2" id="s1">
+    <div class="slide-photo" style="background-image:url('https://res.cloudinary.com/dla8ojffk/image/upload/f_auto,q_auto,w_1600/v1771610493/wplpqcaf8k4yiee0wtpu.jpg')"></div>
+    <div class="slide-overlay"></div>
+    <div class="slide-content">
+      <div class="slide-eyebrow"><span>Premium Bundles</span></div>
+      <h1 class="slide-h1">Silky Smooth<em>Brazilian Hair.</em></h1>
+      <p class="slide-sub">Grade 12A virgin hair bundles — tangle-free, shed-free, and endlessly lustrous.</p>
+      <div class="slide-btns">
+        <a href="#" class="btn-main">Shop Bundles</a>
+        <a href="#" class="btn-outline">See All Textures</a>
+      </div>
+    </div>
+  </div>
+  <div class="slide s3" id="s2">
+    <div class="slide-photo" style="background-image:url('https://images.unsplash.com/photo-1564141696939-9eb6e957ccfc?w=1600&auto=format&fit=crop&q=75&fm=webp')"></div>
+    <div class="slide-overlay"></div>
+    <div class="slide-content">
+      <div class="slide-eyebrow"><span>HD Lace Frontals</span></div>
+      <h1 class="slide-h1">Undetectable<em>Natural Look.</em></h1>
+      <p class="slide-sub">Pre-plucked hairline, bleached knots, HD lace — ready to wear in minutes.</p>
+      <div class="slide-btns">
+        <a href="#" class="btn-main">Shop Wigs</a>
+        <a href="#" class="btn-outline">Learn More</a>
+      </div>
+    </div>
+  </div>
+  <button class="hero-arrow arrow-l" id="arrow-l">&#8592;</button>
+  <button class="hero-arrow arrow-r" id="arrow-r">&#8594;</button>
+  <div class="slide-progress">
+    <div class="prog-seg"><div class="prog-fill running" id="p0"></div></div>
+    <div class="prog-seg"><div class="prog-fill" id="p1"></div></div>
+    <div class="prog-seg"><div class="prog-fill" id="p2"></div></div>
+  </div>
+  <div class="slide-counter"><strong id="cur-num">01</strong> / 03</div>
+  <div class="hero-chip">
+    <div style="font-size:20px">⭐</div>
+    <div><strong>4.9 / 5.0</strong><span>5,200+ verified reviews</span></div>
+  </div>
+</div>
+
+<div class="marquee" aria-hidden="true">
+  <div class="mtrack">
+    <span class="mitem">Lace Front Wigs <em>✦</em></span><span class="mitem">Brazilian Bundles <em>✦</em></span>
+    <span class="mitem">HD Lace Closures <em>✦</em></span><span class="mitem">Colored Wigs <em>✦</em></span>
+    <span class="mitem">100% Virgin Hair <em>✦</em></span><span class="mitem">Grade 12A Quality <em>✦</em></span>
+    <span class="mitem">Free Shipping $150+ <em>✦</em></span>
+    <span class="mitem">Lace Front Wigs <em>✦</em></span><span class="mitem">Brazilian Bundles <em>✦</em></span>
+    <span class="mitem">HD Lace Closures <em>✦</em></span><span class="mitem">Colored Wigs <em>✦</em></span>
+    <span class="mitem">100% Virgin Hair <em>✦</em></span><span class="mitem">Grade 12A Quality <em>✦</em></span>
+    <span class="mitem">Free Shipping $150+ <em>✦</em></span>
+  </div>
+</div>
+
+<div class="features">
+  <div class="feat"><div class="feat-icon">🚚</div><div><strong>Free Shipping</strong><span>All orders over $150</span></div></div>
+  <div class="feat"><div class="feat-icon">💎</div><div><strong>Grade 12A Hair</strong><span>100% virgin, unprocessed</span></div></div>
+  <div class="feat"><div class="feat-icon">🔄</div><div><strong>30-Day Returns</strong><span>Hassle-free guarantee</span></div></div>
+  <div class="feat"><div class="feat-icon">🔒</div><div><strong>Secure Checkout</strong><span>SSL encrypted payments</span></div></div>
+</div>
+
+<section class="cats reveal">
+  <div class="sec-head">
+    <div class="sec-ey"><span>Browse by Collection</span></div>
+    <h2 class="sec-title">Shop <em>Our Collections</em></h2>
+  </div>
+  <div class="cat-grid">
+    <div class="cat-card">
+      <div class="cat-bg" style="background-image:url('https://res.cloudinary.com/dla8ojffk/image/upload/f_auto,q_auto,w_800/v1771610577/u4uals0pxpwrq9bbuvvy.jpg');background-position:center 10%;"></div>
+      <div class="cat-ov"></div>
+      <div class="cat-info"><span class="cat-lbl">Most Popular</span><div class="cat-name">Lace Front Wigs</div><div class="cat-cnt">62 Products</div></div>
+      <div class="cat-arr">→</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-bg" style="background-image:url('https://res.cloudinary.com/dla8ojffk/image/upload/f_auto,q_auto,w_800/v1771610493/wplpqcaf8k4yiee0wtpu.jpg');background-position:center 30%;"></div>
+      <div class="cat-ov"></div>
+      <div class="cat-info"><span class="cat-lbl">Best Seller</span><div class="cat-name">Hair Bundles</div><div class="cat-cnt">38 Products</div></div>
+      <div class="cat-arr">→</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1564141696939-9eb6e957ccfc?w=800&auto=format&fit=crop&q=75&fm=webp');background-position:center 15%;"></div>
+      <div class="cat-ov"></div>
+      <div class="cat-info"><span class="cat-lbl">New Arrivals</span><div class="cat-name">Closures &amp; Frontals</div><div class="cat-cnt">24 Products</div></div>
+      <div class="cat-arr">→</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-bg" style="background-image:url('https://res.cloudinary.com/dla8ojffk/image/upload/f_auto,q_auto,w_800/v1771610493/wplpqcaf8k4yiee0wtpu.jpg');background-position:center 60%;"></div>
+      <div class="cat-ov"></div>
+      <div class="cat-info"><span class="cat-lbl">Trending</span><div class="cat-name">Colored Wigs</div><div class="cat-cnt">29 Products</div></div>
+      <div class="cat-arr">→</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1564141696939-9eb6e957ccfc?w=800&auto=format&fit=crop&q=75&fm=webp');background-position:center 70%;"></div>
+      <div class="cat-ov"></div>
+      <div class="cat-info"><span class="cat-lbl">New</span><div class="cat-name">Extensions</div><div class="cat-cnt">18 Products</div></div>
+      <div class="cat-arr">→</div>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <div class="about-vis">
+    <div class="about-vis-photo" style="background-image:url('https://res.cloudinary.com/dla8ojffk/image/upload/f_auto,q_auto,w_900/v1771610577/u4uals0pxpwrq9bbuvvy.jpg');background-position:center 20%;"></div>
+    <div class="about-vis-badge"><strong>5K+</strong><span>Happy Clients</span></div>
+  </div>
+  <div class="about-txt reveal">
+    <div class="sec-ey"><span>Why D-HAIRS</span></div>
+    <h2 class="sec-title">Quality You Can <em>Feel &amp; Trust</em></h2>
+    <p class="about-p">Every strand we sell is ethically sourced, rigorously inspected, and guaranteed to exceed your expectations. Transforming looks and building confidence since 2018.</p>
+    <div class="checks">
+      <div class="chk"><div class="chk-ic">✓</div>100% Remy human hair — zero synthetic blends</div>
+      <div class="chk"><div class="chk-ic">✓</div>HD &amp; transparent lace for an undetectable finish</div>
+      <div class="chk"><div class="chk-ic">✓</div>Pre-plucked hairlines, bleached knots — ready to wear</div>
+      <div class="chk"><div class="chk-ic">✓</div>Dyeable, heat-safe up to 450°F</div>
+    </div>
+  </div>
+</section>
+
+<section class="testis">
+  <div class="sec-head reveal">
+    <div class="sec-ey"><span>Real Reviews</span></div>
+    <h2 class="sec-title">What Our <em>Clients Say</em></h2>
+  </div>
+  <div class="tgrid">
+    <div class="tcard reveal d1">
+      <div class="tstars">★★★★★</div>
+      <p class="tquote">"The lace is literally undetectable. My stylist didn't even believe it was a wig. This is my third order and I'm obsessed every single time."</p>
+      <div class="tauthor"><div class="tavatar">👩🏾</div><div><div class="tname">Aaliyah M.</div><div class="tverified">Verified · Body Wave Wig 26"</div></div></div>
+    </div>
+    <div class="tcard reveal d2">
+      <div class="tstars">★★★★★</div>
+      <p class="tquote">"Ordered bundles for the first time and I'm blown away. Zero shedding, zero tangles. Ships fast, packaging is beautiful. Will never buy hair anywhere else!"</p>
+      <div class="tauthor"><div class="tavatar">👩🏽</div><div><div class="tname">Destiny R.</div><div class="tverified">Verified · Brazilian Bundle Deal</div></div></div>
+    </div>
+    <div class="tcard reveal d3">
+      <div class="tstars">★★★★★</div>
+      <p class="tquote">"The colored wig is absolutely gorgeous. So natural-looking and incredibly soft. Customer service was amazing. 10/10!"</p>
+      <div class="tauthor"><div class="tavatar">👩🏻</div><div><div class="tname">Jasmine T.</div><div class="tverified">Verified · Ombre Loose Wave Wig</div></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="cta reveal">
+  <div class="cta-txt">
+    <span class="cta-lbl">Limited Time Offer</span>
+    <h2 class="cta-h">Your First Order,<br><em>20% Off.</em></h2>
+    <p class="cta-sub">Premium hair delivered straight to your door. Free express shipping on orders over $200.</p>
+    <div class="cta-code">Use code: <strong>DHAIRS20</strong></div>
+    <a href="#" class="btn-main">Claim Your Discount</a>
+  </div>
+  <div class="cta-side">
+    <div class="cta-circle"><div class="cta-pct">20%</div><div class="cta-off">OFF</div></div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="foot-logo-main">D-<span>HAIRS</span></div>
+      <span class="foot-logo-sub">Premium Human Hair</span>
+      <p>Premium 100% human hair wigs, bundles, and closures. Quality you can feel, style you can trust.</p>
+      <div class="socials">
+        <a href="#" class="soc">f</a><a href="#" class="soc">ig</a><a href="#" class="soc">tw</a><a href="#" class="soc">yt</a>
+      </div>
+    </div>
+    <div class="foot-col"><h5>Shop</h5><ul>
+      <li><a href="#">Lace Front Wigs</a></li><li><a href="#">Hair Bundles</a></li>
+      <li><a href="#">Closures &amp; Frontals</a></li><li><a href="#">Colored Wigs</a></li><li><a href="#">Extensions</a></li>
+    </ul></div>
+    <div class="foot-col"><h5>Help</h5><ul>
+      <li><a href="#">FAQ</a></li><li><a href="#">Shipping &amp; Returns</a></li>
+      <li><a href="#">Track My Order</a></li><li><a href="#">Hair Care Guide</a></li><li><a href="#">Contact Us</a></li>
+    </ul></div>
+    <div class="foot-col"><h5>About</h5><ul>
+      <li><a href="#">Our Story</a></li><li><a href="#">Quality Promise</a></li>
+      <li><a href="#">Affiliates</a></li><li><a href="#">Blog</a></li><li><a href="#">Privacy Policy</a></li>
+    </ul></div>
+  </div>
+  <div class="foot-btm">
+    <span>© 2025 D-HAIRS. All rights reserved.</span>
+    <span>💳 Visa · Mastercard · PayPal · Afterpay · Klarna</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var slides=[document.getElementById('s0'),document.getElementById('s1'),document.getElementById('s2')];
+  var fills=[document.getElementById('p0'),document.getElementById('p1'),document.getElementById('p2')];
+  var cur=0, total=3, DUR=10000, timer;
+
+  function resetFill(i){
+    var f=fills[i];
+    f.classList.remove('running');
+    void f.offsetWidth; // reflow
+  }
+
+  function goTo(n){
+    resetFill(cur);
+    slides[cur].classList.remove('active');
+    cur=(n+total)%total;
+    slides[cur].classList.add('active');
+    document.getElementById('cur-num').textContent=('0'+(cur+1)).slice(-2);
+    resetFill(cur);
+    fills[cur].classList.add('running');
+  }
+
+  function startAuto(){
+    clearInterval(timer);
+    timer=setInterval(function(){goTo(cur+1);},DUR);
+  }
+
+  document.getElementById('arrow-l').addEventListener('click',function(){clearInterval(timer);goTo(cur-1);startAuto();});
+  document.getElementById('arrow-r').addEventListener('click',function(){clearInterval(timer);goTo(cur+1);startAuto();});
+
+  // init
+  goTo(0);
+  startAuto();
+
+  // scroll reveal
+  var ro=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}  });
+  },{threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
+})();
+</script>
+</body>
+</html>

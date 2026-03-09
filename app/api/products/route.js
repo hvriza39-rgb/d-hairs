@@ -4,7 +4,7 @@ import { createProduct } from "@/services/productService";
 export async function POST(request) {
     try {
         const body = await request.json();
-        const { name, description, price, imageUrl } = body;
+        const { name, description, price, imageUrl, category, featured } = body;
 
         // Basic validation
         if (!name || !description || price === undefined || !imageUrl) {
@@ -19,6 +19,8 @@ export async function POST(request) {
             description,
             price: parseFloat(price),
             imageUrl,
+            category: category || "Uncategorized",
+            featured: featured === true,
         });
 
         if (result.success) {

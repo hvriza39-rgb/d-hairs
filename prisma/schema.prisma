@@ -13,6 +13,8 @@ model Product {
   description String
   price       Float
   imageUrl    String
+  category    String   @default("Uncategorized")
+  featured    Boolean  @default(false)
   createdAt   DateTime @default(now())
 }
 
