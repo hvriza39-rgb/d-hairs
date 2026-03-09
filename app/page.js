@@ -106,7 +106,7 @@ export default async function HomePage() {
       {/* ── Announcement bar ─────────────────────────── */}
       <div className="lp-bar">
         <strong>✦ FREE SHIPPING</strong> on orders over ₦300,000 &nbsp;·&nbsp;{" "}
-        
+        Use <strong>DHAIRS20</strong> for 20% off your first order ✦
       </div>
 
       {/* ── Hero Slider (live products) ───────────────── */}
@@ -310,22 +310,26 @@ export default async function HomePage() {
       {/* ── CTA Banner ───────────────────────────────── */}
       <div className="lp-cta lp-reveal">
         <div className="lp-cta-txt">
-          
-          
+          <span className="lp-cta-lbl">Limited Time Offer</span>
+          <h2 className="lp-cta-h">
+            Your First Order,
+            <br />
+            <em>20% Off.</em>
+          </h2>
           <p className="lp-cta-sub">
             Premium hair delivered straight to your door. Free express shipping
             on orders over ₦300,000.
           </p>
           <div className="lp-cta-code">
-            
+            Use code: <strong>DHAIRS20</strong>
           </div>
           <Link href="/shop" className="lp-btn-main">
-            
+            Claim Your Discount
           </Link>
         </div>
         <div className="lp-cta-side">
           <div className="lp-cta-circle">
-            <div className="lp-cta-pct">5%</div>
+            <div className="lp-cta-pct">20%</div>
             <div className="lp-cta-off">OFF</div>
           </div>
         </div>
