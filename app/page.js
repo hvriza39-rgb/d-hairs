@@ -74,8 +74,8 @@ function productToSlide(product, index) {
     headingMain,
     headingItalic,
     sub: product.description,
-    primaryLabel: "Shop Now",
-    primaryHref: `/product/${product.id}`,
+    primaryLabel: "Shop Collection",
+    primaryHref: "/shop",
     secondaryLabel: "View All Products",
     secondaryHref: "/shop",
   };
