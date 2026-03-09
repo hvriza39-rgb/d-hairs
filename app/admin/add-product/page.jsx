@@ -86,6 +86,7 @@ export default function AddProductForm() {
                             cloudName={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}
                             uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
                             onSuccess={handleUploadSuccess}
+                            options={{ sources: ["local"] }}
                         >
                             {({ open }) => (
                                 <button
